@@ -1,1 +1,1 @@
-web: target/universal/stage/lib/fortune-telling-robot
+web: target/scala-2.11/fortune-telling-robot
