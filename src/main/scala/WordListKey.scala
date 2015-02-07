@@ -19,4 +19,6 @@ class WordListKey(keyWords: Iterable[String]) {
   override def hashCode: Int =
     (for ((word, index) <- keyWords.zipWithIndex)
     yield word.toLowerCase(Locale.ENGLISH).hashCode * index).sum
+
+  override def toString = "Key(" + words.mkString(", ") + ")"
 }

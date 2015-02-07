@@ -1,22 +1,30 @@
 package object oracle {
 
-  type WordList = Map[WordListKey, Traversable[String]]
+  type WordMap = Map[WordListKey, Set[String]]
 
   def buildWordList(corpus: String) = {}
 
-  private def appendToWordList(wordList: WordList, corpus: String): WordList = {
+  def appendToWordList(wordMap: WordMap, corpus: String): WordMap = {
     val words = corpus.split(" ")
     words.length match {
-      case n if n < 3 => wordList
+      case n if n < 3 => wordMap
       case _ => {
         /** I don't like this at all, but my brain is too soft to straighten it
           * out at the moment.
           */
-        var newWordList = wordList
+        var newWordMap = wordMap
         for (index <- (0 until (words.length - 2))) {
-          newWordList = newWordList + new Tuple2(new WordListKey(List("Hi")), List("Hi"))
+
+          val key = new WordListKey(words.slice(index, index + 2))
+          val newWord = words(index + 2)
+
+          newWordMap = newWordMap.get(key) match {
+            case None => newWordMap + (key -> Set(newWord))
+            case existingMapping:Some[Set[String]] =>
+              newWordMap + (key -> (existingMapping.get + newWord))
+          }
         }
-        newWordList
+        newWordMap
       }
     }
   }
