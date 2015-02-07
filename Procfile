@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/fortune-telling-robot
+web: target/universal/stage/lib/fortune-telling-robot
