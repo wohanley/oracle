@@ -1,18 +1,18 @@
 package oracle
 
-class WordListKey(keyWords: Iterable[String]) {
+class WordMapKey(keyWords: Iterable[String]) {
 
   import java.util.Locale
 
   def words = keyWords
 
-  override def equals(other: Any) =
+  override def equals(other: Any) = 
     other match {
-      case otherWlk: WordListKey => sameElements(otherWlk)
+      case otherWlk: WordMapKey => sameElements(otherWlk)
       case _ => false
     }
 
-  private def sameElements(other: WordListKey): Boolean =
+  private def sameElements(other: WordMapKey): Boolean =
     (words, other.words).zipped.forall(
       (word, otherWord) => word.equalsIgnoreCase(otherWord))
 

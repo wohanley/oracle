@@ -1,10 +1,10 @@
 package object oracle {
 
-  type WordMap = Map[WordListKey, Set[String]]
+  type WordMap = Map[WordMapKey, Set[String]]
 
   def buildWordList(corpus: String) = {}
 
-  def appendToWordList(wordMap: WordMap, corpus: String): WordMap = {
+  def appendToWordMap(wordMap: WordMap, corpus: String): WordMap = {
     val words = corpus.split(" ")
     words.length match {
       case n if n < 3 => wordMap
@@ -15,7 +15,7 @@ package object oracle {
         var newWordMap = wordMap
         for (index <- (0 until (words.length - 2))) {
 
-          val key = new WordListKey(words.slice(index, index + 2))
+          val key = new WordMapKey(words.slice(index, index + 2))
           val newWord = words(index + 2)
 
           newWordMap = newWordMap.get(key) match {
