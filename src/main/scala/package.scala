@@ -82,10 +82,7 @@ package object oracle {
     new WordMapKey(key.words.tail ++ List(newWord))
 
   private def getRandom[T](iterable: Iterable[T]): Option[T] =
-    iterable.size match {
-      case 0 => None
-      case _ => Some(Random.shuffle(iterable).head)
-    }
+    Random.shuffle(iterable).headOption
 
   private def getRandom[K,V](map: Map[K,V]): Option[V] =
     getRandom(map.keys).flatMap(map.get)
