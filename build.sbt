@@ -13,4 +13,4 @@ scalacOptions in Test ++= Seq("-Yrangepos")
 resolvers ++= Seq("snapshots", "releases").map(Resolver.sonatypeRepo)
 
 // Heroku stuff
-libraryDependencies ++= Seq("com.twitter" % "finagle-http" % "6.24.0")
+libraryDependencies ++= Seq("com.twitter" % "finagle-http_2.11" % "6.24.0")
