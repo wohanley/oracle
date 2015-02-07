@@ -45,7 +45,7 @@ package object oracle {
   }
 
   def tellFortune(wordMap: WordMap): String = {
-    val seed = getRandom(wordMap.keys).get
+    val seed = getRandomKey(wordMap)
     val word = seed.words.head
     val nextWord = seed.words.tail.head
     val fortune = new StringBuilder(word + " " + nextWord + " ")
@@ -56,7 +56,6 @@ package object oracle {
   }
 
   private def buildFortune(fortune: StringBuilder, wordMap: WordMap, key: WordMapKey): String = {
-    println("getting " + key)
     wordMap.get(key) match {
     /* Let's say we have a corpus ending "if you drive fast enough." If, as is
      * possible, "fast enough." isn't anywhere else in our word map, then
@@ -81,10 +80,18 @@ package object oracle {
   private def advanceKey(newWord: String, key: WordMapKey): WordMapKey =
     new WordMapKey(key.words.tail ++ List(newWord))
 
-  private def getRandom[T](iterable: Iterable[T]): Option[T] =
+  def getRandom[T](iterable: Iterable[T]): Option[T] =
     Random.shuffle(iterable).headOption
 
-  private def getRandom[K,V](map: Map[K,V]): Option[V] =
-    getRandom(map.keys).flatMap(map.get)
+  /** Return a random key from the map.
+    * There's something very funny going on here that I can't figure out.
+    * getRandom(map.keys) ought to work, but it always returns the same thing.
+    * I assume it's something to do with my overriding hashCode or equals on
+    * WordMapKey? Curious... */
+  def getRandomKey(map: WordMap): WordMapKey = {
+    val index = Random.nextInt(map.size)
+    val array = map.keys.toArray
+    array(index)
+  }
 }
 
