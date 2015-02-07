@@ -2,6 +2,8 @@ package oracle
 
 class WordListKey(keyWords: Iterable[String]) {
 
+  import java.util.Locale
+
   def words = keyWords
 
   override def equals(other: Any) =
@@ -15,5 +17,6 @@ class WordListKey(keyWords: Iterable[String]) {
       (word, otherWord) => word.equalsIgnoreCase(otherWord))
 
   override def hashCode: Int =
-    (for (word <- keyWords) yield keyWords.hashCode).sum
+    (for ((word, index) <- keyWords.zipWithIndex)
+    yield word.toLowerCase(Locale.ENGLISH).hashCode * index).sum
 }
