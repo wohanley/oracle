@@ -1,4 +1,4 @@
 scratch
 target/
-project/
+project/target/
 .ensime*
