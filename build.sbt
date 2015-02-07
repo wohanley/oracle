@@ -1,3 +1,7 @@
+import NativePackagerKeys._
+
+packageArchetype.java_application
+
 name := """fortune-telling-robot"""
 version := "1.0"
 
