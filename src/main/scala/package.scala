@@ -1,8 +1,22 @@
 package object oracle {
 
+  import scala.collection.immutable.HashMap
+  import java.util.Scanner
+  import java.io.File
+
   type WordMap = Map[WordMapKey, Set[String]]
 
-  def buildWordList(corpus: String) = {}
+  def buildWordMap(fileNames: List[String]): WordMap = {
+    var wordMap: WordMap = new HashMap[WordMapKey, Set[String]]()
+    for (fileName <- fileNames) {
+      val scanner = new Scanner(new File(fileName))
+      scanner.useDelimiter(System.lineSeparator() + "%" + System.lineSeparator())
+      while (scanner.hasNext) {
+        wordMap = appendToWordMap(wordMap, scanner.next)
+      }
+    }
+    wordMap
+  }
 
   /** Returns a WordMap updated to include words from corpus. */
   def appendToWordMap(wordMap: WordMap, corpus: String): WordMap = {
@@ -27,5 +41,9 @@ package object oracle {
         newWordMap
       }
     }
+  }
+
+  def tellFortune(length: Int, wordMap: WordMap): String = {
+    
   }
 }
