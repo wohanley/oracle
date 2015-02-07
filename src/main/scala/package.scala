@@ -4,14 +4,14 @@ package object oracle {
 
   def buildWordList(corpus: String) = {}
 
+  /** Returns a WordMap updated to include words from corpus. */
   def appendToWordMap(wordMap: WordMap, corpus: String): WordMap = {
     val words = corpus.split(" ")
     words.length match {
       case n if n < 3 => wordMap
       case _ => {
-        /** I don't like this at all, but my brain is too soft to straighten it
-          * out at the moment.
-          */
+        /* I don't like this at all, but my brain is too soft to straighten it
+         * out at the moment. */
         var newWordMap = wordMap
         for (index <- (0 until (words.length - 2))) {
 
