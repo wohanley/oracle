@@ -42,7 +42,7 @@ object TweetTask extends TimerTask {
       .setOAuthAccessTokenSecret(Properties.envOrElse("ACCESS_TOKEN_SECRET", ""))
       .build()
 
-    val twitter = new TwitterFactory().getInstance()
+    val twitter = new TwitterFactory(twitterConfig).getInstance()
     twitter.updateStatus(oracle.tellFortune(wordMap).take(160))
   }
 }
