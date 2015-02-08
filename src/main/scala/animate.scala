@@ -43,7 +43,7 @@ object TweetTask extends TimerTask {
       .build()
 
     val twitter = new TwitterFactory(twitterConfig).getInstance()
-    twitter.updateStatus(oracle.tellFortune(wordMap).take(160))
+    twitter.updateStatus(oracle.tellFortune(wordMap).take(140))
   }
 }
 
