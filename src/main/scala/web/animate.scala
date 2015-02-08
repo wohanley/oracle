@@ -17,10 +17,6 @@ import oauth.signpost.basic.DefaultOAuthProvider
 
 object HerokuWeb {
   def main(args: Array[String]) {
-    val port = Properties.envOrElse("PORT", "8080").toInt
-    val server = Http.serve(":" + port, new HelloService)
-    Await.ready(server)
-
     tweetRegularly()
   }
 
