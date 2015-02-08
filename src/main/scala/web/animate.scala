@@ -24,15 +24,14 @@ object HerokuWeb {
     tweetRegularly()
   }
 
-  private def tweetRegularly() =
-    new Timer().schedule(TweetTask, 0, 15 * 60 * 1000)
-}
-
-object TweetTask extends TimerTask {
-
   val wordMap = oracle.buildWordMap(List("fortunes", "wisdom", "goedel"))
 
-  override def run = web.tweet(wordMap)
+  private def tweetRegularly() = {
+    while (true) {
+      web.tweet(wordMap)
+      Thread.sleep(0, 15 * 60 * 1000)
+    }
+  }
 }
 
 class HelloService extends Service[HttpRequest, HttpResponse] {
