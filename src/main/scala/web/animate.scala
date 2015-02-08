@@ -1,4 +1,4 @@
-package oracle
+package oracle.web
 
 import com.twitter.finagle.http.RequestBuilder
 import com.twitter.finagle.{Http, Service}
@@ -14,10 +14,9 @@ import oauth.signpost.OAuthConsumer
 import oauth.signpost.OAuthProvider
 import oauth.signpost.basic.DefaultOAuthConsumer
 import oauth.signpost.basic.DefaultOAuthProvider
-import twitter4j._
 
-object Animator {
-  def main(args: Array[String]) {
+object HerokuWeb {
+  def start() {
     val port = Properties.envOrElse("PORT", "8080").toInt
     val server = Http.serve(":" + port, new HelloService)
     Await.ready(server)
@@ -25,7 +24,7 @@ object Animator {
     tweetRegularly()
   }
 
-  def tweetRegularly() =
+  private def tweetRegularly() =
     new Timer().schedule(TweetTask, 0, 15 * 60 * 1000)
 }
 
@@ -33,18 +32,7 @@ object TweetTask extends TimerTask {
 
   val wordMap = oracle.buildWordMap(List("fortunes", "wisdom", "goedel"))
 
-  /** Tweet a fortune */
-  override def run = {
-    val twitterConfig = new twitter4j.conf.ConfigurationBuilder()
-      .setOAuthConsumerKey("9JqqFKjWiA435oCGU9yuuM1MY")
-      .setOAuthConsumerSecret(Properties.envOrElse("API_SECRET", ""))
-      .setOAuthAccessToken("3012148274-YO67BWOFQHyQT0ff7DXPrsLtaemFsxSCfF8hmci")
-      .setOAuthAccessTokenSecret(Properties.envOrElse("ACCESS_TOKEN_SECRET", ""))
-      .build()
-
-    val twitter = new TwitterFactory(twitterConfig).getInstance()
-    twitter.updateStatus(oracle.tellFortune(wordMap).take(140))
-  }
+  override def run = web.tweet(wordMap)
 }
 
 class HelloService extends Service[HttpRequest, HttpResponse] {
