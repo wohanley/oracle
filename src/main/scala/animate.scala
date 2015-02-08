@@ -1,5 +1,6 @@
 package oracle
 
+import com.twitter.finagle.http.RequestBuilder
 import com.twitter.finagle.{Http, Service}
 import com.twitter.util.{Await, Future}
 import com.twitter.finagle.http.Response
@@ -13,6 +14,7 @@ import oauth.signpost.OAuthConsumer
 import oauth.signpost.OAuthProvider
 import oauth.signpost.basic.DefaultOAuthConsumer
 import oauth.signpost.basic.DefaultOAuthProvider
+import twitter4j._
 
 object Animator {
   def main(args: Array[String]) {
@@ -33,14 +35,15 @@ object TweetTask extends TimerTask {
 
   /** Tweet a fortune */
   override def run = {
-    val oauthConsumer = new DefaultOAuthConsumer(
-      "9JqqFKjWiA435oCGU9yuuM1MY",
-      Properties.envOrElse("API_SECRET", ""))
-    oauthConsumer.setTokenWithSecret(
-      "3012148274-YO67BWOFQHyQT0ff7DXPrsLtaemFsxSCfF8hmci",
-      Properties.envOrElse("ACCESS_TOKEN_SECRET", "")
-    )
-    
+    val twitterConfig = new twitter4j.conf.ConfigurationBuilder()
+      .setOAuthConsumerKey("9JqqFKjWiA435oCGU9yuuM1MY")
+      .setOAuthConsumerSecret(Properties.envOrElse("API_SECRET", ""))
+      .setOAuthAccessToken("3012148274-YO67BWOFQHyQT0ff7DXPrsLtaemFsxSCfF8hmci")
+      .setOAuthAccessTokenSecret(Properties.envOrElse("ACCESS_TOKEN_SECRET", ""))
+      .build()
+
+    val twitter = new TwitterFactory().getInstance()
+    twitter.updateStatus(oracle.tellFortune(wordMap).take(160))
   }
 }
 
