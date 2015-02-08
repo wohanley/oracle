@@ -56,6 +56,9 @@ package object oracle {
   }
 
   private def buildFortune(fortune: StringBuilder, wordMap: WordMap, key: WordMapKey): String = {
+
+    if (fortune.length > 500) return fortune.toString()
+
     wordMap.get(key) match {
     /* Let's say we have a corpus ending "if you drive fast enough." If, as is
      * possible, "fast enough." isn't anywhere else in our word map, then
