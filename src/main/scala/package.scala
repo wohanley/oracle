@@ -35,8 +35,8 @@ package object oracle {
 
           newWordMap = newWordMap.get(key) match {
             case None => newWordMap + (key -> Set(newWord))
-            case existingMapping:Some[Set[String]] =>
-              newWordMap + (key -> (existingMapping.get + newWord))
+            case Some(set) =>
+              newWordMap + (key -> (set + newWord))
           }
         }
         newWordMap
