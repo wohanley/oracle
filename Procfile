@@ -1,1 +1,1 @@
-web: target/universal/stage/bin/fortune-telling-robot
+worker: target/universal/stage/bin/fortune-telling-robot
