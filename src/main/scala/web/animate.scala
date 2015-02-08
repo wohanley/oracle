@@ -20,7 +20,10 @@ object HerokuWeb {
     tweetRegularly()
   }
 
-  val wordMap = oracle.buildWordMap(List("fortunes", "wisdom", "goedel"))
+  val wordMap = oracle.buildWordMap(List("fortunes",
+    "wisdom",
+    "goedel",
+    "fortunecookiemessage.com-fortunes"))
 
   private def tweetRegularly() = {
     while (true) {
