@@ -28,7 +28,7 @@ object HerokuWeb {
   private def tweetRegularly() = {
     while (true) {
       web.tweet(wordMap)
-      Thread.sleep(60 * 60 * 1000)
+      Thread.sleep(120 * 60 * 1000)
     }
   }
 }
