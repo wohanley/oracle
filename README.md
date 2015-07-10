@@ -1,9 +1,9 @@
 Oracle
 ======
 
-Generates fortunes.
+Generates fortunes using Markov chains.
 
 Word lists included, from the Arch Linux package fortune-mod:
-fortune
-goedel
-wisdom
+- fortune
+- goedel
+- wisdom
